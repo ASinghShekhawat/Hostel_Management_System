@@ -28,7 +28,7 @@ export default function Header() {
         <div className="div3" >
           <div className="link">
             <Link to="/sign-in-page" title="Open Login Form, Members will be able to view all links only after login">
-              Log IN
+              {localStorage.getItem('userName') ? localStorage.getItem('userName') : 'Log In'}
             </Link>
             <br />
             {/* <a href="/sign-in-page" target="container3" title="Open Login Form, Members will be able to view all links only after login">LOG IN</a><br /> */}

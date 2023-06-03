@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +12,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './SignInPage.scss';
 import { Link } from "react-router-dom";
+import React,{useState} from "react";
+import Axios from 'axios';
 
 function Copyright(props) {
   return (
@@ -27,6 +28,11 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInPage() {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState("");
+  const [registerStatus, setRegisterStatus] = useState("");
   const handleSubmit1 = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -42,6 +48,25 @@ export default function SignInPage() {
       email: data.get('email'),
       password: data.get('password'),
     });
+  };
+  const login =()=>{
+    Axios.post("http://localhost:3001/student",{
+      email:email,
+      password:password,
+    }).then((response)=>{
+      if(response.data.message){
+        setLoginStatus(response.data.message);
+        alert("Incorrect loginId or password!");
+      }else{
+        setLoginStatus("STUDENT SIGNIN SUCCESSFULLY");
+        alert('Signed In Successfully!');
+        // const name=response.data[0].username;
+        // setStudent(name);
+        // console.log(name);
+        // navigate("/StudentDashboard");
+      }
+      // console.log(student);
+  });
   };
   return (
     <>
@@ -128,6 +153,11 @@ export default function SignInPage() {
                     name="email"
                     autoComplete="email"
                     autoFocus
+                    onChange={(e)=>{
+                      setEmail(e.target.value);
+                      e.preventDefault();
+                    }}
+                    
                   // sx={{ mt: "3px", mb: "2px" }}
                   />
                   <TextField
@@ -139,6 +169,10 @@ export default function SignInPage() {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    onChange={(e)=>{
+                      setPassword(e.target.value);
+                      e.preventDefault();
+                    }}
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
@@ -150,6 +184,7 @@ export default function SignInPage() {
                       fullWidth
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
+                      onClick={login}
                     >
                       Sign In
                     </Button>

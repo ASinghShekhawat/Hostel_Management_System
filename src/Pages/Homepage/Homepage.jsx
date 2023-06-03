@@ -3,6 +3,10 @@ import Card from 'react-bootstrap/Card';
 import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import './Homepage.scss';
+import entrance from '../../Assets/entrance.jpg';
+import map from '../../Assets/map.jpg';
+import front from '../../Assets/front.jpg'
+
 function Homepage() {
   return (
     <div>
@@ -70,7 +74,7 @@ function Homepage() {
             <Carousel.Item>
               <img
                 className="w-100"
-                src="https://www.mbmalumni.org/gjmphotos/fsize/b68_mbm-mining.jpg"
+                src={entrance}
                 alt="First slide"
               />
               {/* <Carousel.Caption>
@@ -81,7 +85,7 @@ function Homepage() {
             <Carousel.Item>
               <img
                 className="w-100"
-                src="https://www.mbmalumni.org/gjmphotos/fsize/CP_cc_dsc_0290.jpg"
+                src={map}
                 alt="Second slide"
               />
 
@@ -93,7 +97,7 @@ function Homepage() {
             <Carousel.Item>
               <img
                 className="w-100"
-                src="https://www.mbmalumni.org/gjmphotos/fsize/CP_cc_dsc_0293.jpg"
+                src={front}
                 alt="Third slide"
               />
 
@@ -117,11 +121,11 @@ function Homepage() {
             <h5 style={{ fontFamily: 'serif' }}><u>NOTICE</u></h5>
           </div>
           <h5 style={{ fontFamily: 'cursive' }}>
-            The Following Interview boards are hereby constituted to conduct interview of candidates for scholarship of the session 2022-23
+            The Following Interview boards are hereby constituted to conduct interview of candidates for hostel allotment of the session 2022-23
           </h5>
           <br />
           <h5 style={{ fontFamily: 'cursive' }}>
-            These Boards will conduct interview of the applicants for grading of candidates for various scholarship. The criteria and application form details the students will be made available at the time of interview. The Board Members are also requested to kindly verify the original documents and eligibility. They are also requested to prepare lists based on given criteria.
+            These Boards will conduct interview of the applicants for grading of candidates for various hostels. The criteria and application form details the students will be made available at the time of interview. The Board Members are also requested to kindly verify the original documents and eligibility. They are also requested to prepare lists based on given criteria.
           </h5>
           <br /><br />
           <h5 style={{ fontFamily: 'cursive' }}>
@@ -133,7 +137,7 @@ function Homepage() {
           </h5>
           <br /><br /><br />
           <h5 style={{ fontFamily: 'cursive' }}>
-            Here by all students are informed that application date for scholarship has been extended to 31-01-2023. Rest information remains the same. and Applications have also been invited for the Inspire-95 scholarship.
+            Here by all students are informed that application date for hostels has been extended to 31-01-2023. Rest information remains the same. and Applications have also been invited for the hostel allotment.
           </h5>
           <br />
           <br />
