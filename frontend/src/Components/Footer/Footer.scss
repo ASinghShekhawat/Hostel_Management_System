@@ -161,3 +161,13 @@
     font-weight:600
   }
 }
+.developer-link {
+  color: #e84393!important;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: #fd79a8;
+    text-decoration: underline;
+  }
+}

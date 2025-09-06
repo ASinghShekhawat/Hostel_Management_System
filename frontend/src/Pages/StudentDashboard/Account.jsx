@@ -1,160 +1,48 @@
-import React from 'react';
-import Carousel from 'react-bootstrap/Carousel';
-import Card from 'react-bootstrap/Card';
-import { Row, Col, Table, Button, Input } from "reactstrap";
-import { Link } from "react-router-dom";
+import Axios from 'axios';
+import { useEffect, useState } from 'react';
+import { Col, Row, Table } from "reactstrap";
 import './StudentDashboard.scss';
-class Account extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            userRollNo: '20UECC8004',
-            userFirstName: 'Aditya',
-            userMiddleName: 'Singh',
-            userLastName: 'Shekhawat',
-            userAddress: 'Guha Park,Kolkata',
-            userMobileNumber: '8777071047',
-            userCategory: 'General',
-            userEmailId: 'aditya@gmail.com',
-            userCity: 'Kolkata',
-            userState: 'West-Bengal',
-            userMartialStatus: 'Single',
-            userYear: 'IV',
-        };
-    }
-    render() {
-        return (
-            <div className='componentColor'>
-                <div style={{ backgroundColor: '#99cc99' }}>
-                    <div>
-                        <marquee behavior="scroll" direction="left" scrollamount="4,0">
-                            <font size="5"><b> (1)</b></font>&nbsp;<span style={{ color: '#000080', fontSize: '20px', fontStyle: 'oblique' }}>
-                                <strong>The respective informations and updates on the Hostel Allotment Dates and the respective rank lists will be displayed on the dashboard of the applicable students. In addition to that, the fee withdrawal procedures are neglected for now !!!!!</strong>
-                            </span>
-                        </marquee>
+import { toast } from 'react-toastify';
+
+function Account() {
+    const [account, setAccount] = useState(null);
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (!userId) return;
+        Axios.get(`http://localhost:3001/student/account/${userId}`)
+            .then(res => {setAccount(res.data); toast.success('Account data loaded successfully');})
+            .catch(err => {console.error('Failed to fetch account:', err); toast.error('Failed to load account data');});
+    }, []);
+
+    if (!account) return <div>Loading...</div>;
+
+    return (
+        <div className='componentColor'>
+            <Row>
+                <Col>
+                    <div className="account-details-container">
+                        <h4>Account Details</h4>
+                        <Table bordered>
+                            <tbody>
+                                <tr><th>Roll No</th><td>{account.rollNo}</td></tr>
+                                <tr><th>Name</th><td>{account.firstName} {account.middleName} {account.lastName}</td></tr>
+                                <tr><th>Address</th><td>{account.address}</td></tr>
+                                <tr><th>Mobile Number</th><td>{account.mobileNumber}</td></tr>
+                                <tr><th>Category</th><td>{account.category}</td></tr>
+                                <tr><th>Email</th><td>{account.emailId}</td></tr>
+                                <tr><th>City</th><td>{account.city}</td></tr>
+                                <tr><th>State</th><td>{account.state}</td></tr>
+                                <tr><th>Marital Status</th><td>{account.maritalStatus}</td></tr>
+                                <tr><th>Year</th><td>{account.year}</td></tr>
+                                <tr><th>Branch</th><td>{account.branch}</td></tr>
+                            </tbody>
+                        </Table>
                     </div>
-                    <div style={{ display: 'flex', gap: '7%', marginTop: '2px', backgroundColor: '#99cc99', height: '40px', justifyContent: 'center', alignItems: 'center', overflow: 'auto' }}>
-                        <Link to="/studentDashboard"><button style={{ backgroundColor: '#004488', color: 'yellow', border: '0.5px', borderRadius: '20%' }}>Home</button></Link>
-                        <Link to="/faqs"><button style={{ backgroundColor: '#004488', color: 'yellow', border: '0.5px', borderRadius: '20%' }}>FAQs</button></Link>
-                        <Link to="/messAndLodging"><button style={{ backgroundColor: '#004488', color: 'yellow', border: '0.5px', borderRadius: '20%' }}>Hostel Mess</button></Link>
-                        <Link to="/account"><button style={{ backgroundColor: '#004488', color: 'yellow', border: '0.5px', borderRadius: '20%' }}>Account</button></Link>
-                        <Link to="/hostelForm"><button style={{ backgroundColor: '#004488', color: 'yellow', border: '0.5px', borderRadius: '20%' }}>Hostel Form</button></Link >
-                        <Link to="/helpDesk"><button style={{ backgroundColor: '#004488', color: 'yellow', border: '0.5px', borderRadius: '20%' }}>Help Desk</button></Link >
-
-                    </div >
-                </div>
-                <Row className='m-0'>
-                    <Col>
-                        <br />
-                        <div style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-                            <h4><u>Account Details</u></h4>
-                        </div>
-                        <br />
-                        <div className='AccountList'>
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}>Roll No. :</span>
-                                <Input type="text" value={this.state.userRollNo} size="sm" style={{ width: '200px' }} disabled />
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}>First Name :</span>
-                                <Input type="text" value={this.state.userFirstName} size="sm" style={{ width: '200px' }} />
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}>Middle Name :</span>
-                                <Input type="text" value={this.state.userMiddleName} size="sm" style={{ width: '200px' }} />
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}> Last Name :</span>
-                                <Input type="text" value={this.state.userLastName} size="sm" style={{ width: '200px' }} />
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}> Mobile Number :</span>
-                                <Input type="number" value={this.state.userMobileNumber} size="sm" style={{ width: '200px' }} />
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}> Category :</span>
-                                <Input type="select" value={this.state.userCategory} size="sm" style={{ width: '200px' }}>
-                                    <option>--select--</option>
-                                    <option>General</option>
-                                    <option>Obc</option>
-                                    <option>SC</option>
-                                    <option>ST</option>
-                                    <option>Other</option>
-                                </Input>
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}> Martial Status :</span>
-                                <Input type="select" value={this.state.userMartialStatus} size="sm" style={{ width: '200px' }}>
-                                    <option>--select--</option>
-                                    <option>Single</option>
-                                    <option>Married</option>
-                                </Input>
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}> Year :</span>
-                                <Input type="select" value={this.state.userYear} size="sm" style={{ width: '200px' }}>
-                                    <option>--select--</option>
-                                    <option>I</option>
-                                    <option>II</option>
-                                    <option>III</option>
-                                    <option>IV</option>
-                                </Input>
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}> Email Id :</span>
-                                <Input type="text" value={this.state.userEmailId} size="sm" style={{ width: '200px' }} />
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}> State :</span>
-                                <Input type="select" value={this.state.userState} size="sm" style={{ width: '200px' }}>
-                                    <option>--select--</option>
-                                    <option>West-Bengal</option>
-                                    <option>Rajasthan</option>
-                                    <option>Madhya Pradesh</option>
-                                    <option>Arunachal Pradesh</option>
-                                </Input>
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}> City :</span>
-                                <Input type="select" value={this.state.userCity} size="sm" style={{ width: '200px' }}>
-                                    <option>--select--</option>
-                                    <option>Kolkata</option>
-                                    <option>Jaipur</option>
-                                    <option>Bengaluru</option>
-                                    <option>Hyderabad</option>
-                                </Input>
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                                <span style={{ color: 'black' }}> Address :</span>
-                                <Input type="textarea" value={this.state.userAddress} size="sm" style={{ width: '200px' }}>
-                                </Input>
-                            </div>
-                            <br />
-                            <div style={{ display: 'flex', gap: '5%', justifyContent: 'center' }}>
-                            <Button color="success">Save</Button>
-                            <Button color="danger">Reset</Button>
-                            </div>
-
-                        </div>
-            
-                        <br /><br /><br />
-                    </Col>
-                </Row>
-
-            </div >
-        );
-    }
+                </Col>
+            </Row>
+        </div>
+    );
 }
 
 export default Account;

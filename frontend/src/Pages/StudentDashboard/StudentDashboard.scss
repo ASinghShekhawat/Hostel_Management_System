@@ -7,3 +7,21 @@
     padding-left: 2%;
     padding-right: 2%;
 }
+
+.account-details-container {
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.account-details-container h4 {
+  margin-bottom: 1.5rem;
+}
+
+.account-details-container table {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
