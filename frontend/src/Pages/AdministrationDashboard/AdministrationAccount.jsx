@@ -1,5 +1,13 @@
 import React from "react";
-import { Row, Col, Button, Input } from "reactstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Input,
+} from "reactstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -20,7 +28,9 @@ class AdministrationAccount extends React.Component {
       userMaritalStatus: "",
       userBranch: "",
       isLoading: true,
-      originalState: {}
+      originalState: {},
+      currentPassword: "",
+      newPassword: ""
     };
   }
 
@@ -83,7 +93,15 @@ class AdministrationAccount extends React.Component {
       userMaritalStatus,
     } = this.state;
 
-    if(!userFirstName || !userAddress || !userMobileNumber || !userCategory || !userCity || !userState || !userMaritalStatus){
+    if (
+      !userFirstName ||
+      !userAddress ||
+      !userMobileNumber ||
+      !userCategory ||
+      !userCity ||
+      !userState ||
+      !userMaritalStatus
+    ) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -101,7 +119,7 @@ class AdministrationAccount extends React.Component {
         maritalStatus: userMaritalStatus,
       })
       .then((res) => {
-        if(res.status >= 200){
+        if (res.status >= 200) {
           toast.success("Account updated successfully");
         } else {
           toast.error("Failed to update account");
@@ -109,19 +127,56 @@ class AdministrationAccount extends React.Component {
         }
         this.setState({
           originalState: {
-            ...this.state
+            ...this.state,
           },
         });
       })
       .catch((err) => {
         console.error("Failed to update account:", err);
-        toast.error("Failed to update account details")
+        toast.error("Failed to update account details");
+      });
+  };
+  handlePasswordUpdate = () => {
+    const userId = localStorage.getItem("userId");
+    const { currentPassword, newPassword } = this.state;
+
+    // Validate inputs
+    if (!currentPassword || !newPassword) {
+      toast.error("Please enter both current and new passwords");
+      return;
+    }
+
+    axios
+      .put(`http://localhost:3001/admin/updatePassword/${userId}`, {
+        currentPassword,
+        newPassword,
+      })
+      .then((res) => {
+        if (res.status >= 200) {
+          toast.success("Password updated successfully");
+          this.setState({
+            currentPassword: "",
+            newPassword: "",
+          });
+        } else if (res.status === 401) {
+          toast.error("Current password is incorrect");
+        } else {
+          toast.error("Failed to update password");
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to update password:", err);
+        if (err.response && err.response.status === 401) {
+          toast.error("Current password is incorrect");
+        } else {
+          toast.error("Failed to update password");
+        }
       });
   };
 
   handleReset = () => {
     this.setState({
-      ...this.state.originalState
+      ...this.state.originalState,
     });
   };
 
@@ -341,6 +396,55 @@ class AdministrationAccount extends React.Component {
               </div>
             </div>
             <br />
+            {/* Add Password Update Section */}
+            <Card className="mb-4">
+              <CardHeader>
+                <h5 className="mb-0">Update Password</h5>
+              </CardHeader>
+              <CardBody>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "5%",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span style={{ color: "black" }}>Current Password:</span>
+                  <Input
+                    type="password"
+                    name="currentPassword"
+                    value={this.state.currentPassword}
+                    onChange={this.handleInputChange}
+                    size="sm"
+                    style={{ width: "200px" }}
+                  />
+                </div>
+                <br />
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "5%",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span style={{ color: "black" }}>New Password:</span>
+                  <Input
+                    type="password"
+                    name="newPassword"
+                    value={this.state.newPassword}
+                    onChange={this.handleInputChange}
+                    size="sm"
+                    style={{ width: "200px" }}
+                  />
+                </div>
+                <br />
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <Button color="primary" onClick={this.handlePasswordUpdate}>
+                    Update Password
+                  </Button>
+                </div>
+              </CardBody>
+            </Card>
             <br />
             <br />
           </Col>

@@ -463,6 +463,61 @@ router.get('/previous-queries/:userId', async (req, res) => {
     }
 });
 
+router.put('/updatePassword/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const {
+            currentPassword,
+            newPassword
+        } = req.body;
+
+        const { data: user, error: userError } = await supabase
+            .from('users')
+            .select('password')
+            .eq('id', userId)
+            .eq('role', 'student')
+            .single();
+            
+        if (userError || !user) {
+            return res.status(404).json({ 
+                error: "Student not found" 
+            });
+        }
+
+        // Verify current password
+        const isPasswordValid = currentPassword === user.password;
+        if (!isPasswordValid) {
+            return res.status(401).json({ 
+                error: "Current password is incorrect" 
+            });
+        }
+
+        // Update password
+        const { error: updateError } = await supabase
+            .from('users')
+            .update({ password: newPassword })
+            .eq('id', userId)
+            .eq('role', 'student');
+
+        if (updateError) {
+            console.error('Update password error:', updateError);
+            return res.status(500).json({ 
+                error: 'Failed to update password' 
+            });
+        }
+
+        res.json({ 
+            message: "Password updated successfully" 
+        });
+
+    } catch (error) {
+        console.error('Password update error:', error);
+        res.status(500).json({ 
+            error: 'Failed to update password' 
+        });
+    }
+});
+
 //PENDING TO IMPL
 router.post('/add-form', async (req, res) => {
     try {

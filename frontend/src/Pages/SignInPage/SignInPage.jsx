@@ -207,6 +207,7 @@ export default function SignInPage() {
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit1} noValidate>
                   <TextField
+                    size="small"
                     className="inputBox"
                     margin="normal"
                     required
@@ -223,6 +224,7 @@ export default function SignInPage() {
                     // sx={{ mt: "3px", mb: "2px" }}
                   />
                   <TextField
+                    size="small"
                     margin="normal"
                     required
                     fullWidth
@@ -238,10 +240,10 @@ export default function SignInPage() {
                       studentPasswordError ? "Password is required" : ""
                     }
                   />
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
                     label="Remember me"
-                  />
+                  /> */}
                   <Button
                     type="submit"
                     fullWidth
@@ -253,14 +255,9 @@ export default function SignInPage() {
                   </Button>
                   <Grid container>
                     <Grid item xs>
-                      {/* <Link href="#" variant="body2">
+                      <Link href="#" variant="body2" onClick={() => toast.info("Feature coming soon!")}>
                       Forgot password?
-                    </Link> */}
-                    </Grid>
-                    <Grid item>
-                      {/* <Link href="#" variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link> */}
+                    </Link>
                     </Grid>
                   </Grid>
                 </Box>
@@ -288,6 +285,7 @@ export default function SignInPage() {
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit2} noValidate>
                   <TextField
+                    size="small"
                     className="inputBox"
                     margin="normal"
                     required
@@ -304,6 +302,7 @@ export default function SignInPage() {
                     // sx={{ mt: "3px", mb: "2px" }}
                   />
                   <TextField
+                    size="small"
                     margin="normal"
                     required
                     fullWidth
@@ -319,10 +318,6 @@ export default function SignInPage() {
                       adminPasswordError ? "Password is required" : ""
                     }
                   />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
                   <Button
                     type="submit"
                     fullWidth
@@ -332,18 +327,6 @@ export default function SignInPage() {
                   >
                     Sign In
                   </Button>
-                  <Grid container>
-                    <Grid item xs>
-                      {/* <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link> */}
-                    </Grid>
-                    <Grid item>
-                      {/* <Link href="#" variant="body2">
-                    </Link> */}
-                      Don't have an account? Sign Up
-                    </Grid>
-                  </Grid>
                 </Box>
               </Box>
             </Container>
